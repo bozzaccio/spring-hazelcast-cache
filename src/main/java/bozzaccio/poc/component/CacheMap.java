@@ -6,14 +6,14 @@ import com.hazelcast.core.IMap;
 import java.util.Objects;
 import java.util.Set;
 
-public abstract class CacheComponent<K, V> {
+public abstract class CacheMap<K, V> {
 
     private final HazelcastInstance hazelcastInstance;
     private final String mapName;
 
     private IMap<K, V> cacheMap;
 
-    public CacheComponent(HazelcastInstance hazelcastInstance, String mapName) {
+    public CacheMap(HazelcastInstance hazelcastInstance, String mapName) {
         this.hazelcastInstance = hazelcastInstance;
         this.mapName = mapName;
         this.cacheMap = hazelcastInstance.getMap(mapName);
@@ -46,12 +46,19 @@ public abstract class CacheComponent<K, V> {
 
     public void removeCacheData(K key) {
 
+        Objects.requireNonNull(key, "key validation error");
+
         cacheMap = hazelcastInstance.getMap(mapName);
 
         cacheMap.remove(key);
     }
 
     public Set<K> getKeySet() {
-        return cacheMap.keySet();
+
+        if (Objects.nonNull(cacheMap)) {
+            return cacheMap.keySet();
+        } else {
+            throw new NullPointerException("Cache map not valid");
+        }
     }
 }

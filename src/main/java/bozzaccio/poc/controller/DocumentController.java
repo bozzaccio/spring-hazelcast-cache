@@ -19,7 +19,7 @@ public class DocumentController {
     private DocumentCacheService documentCacheService;
 
     @GetMapping()
-    public ResponseEntity<DocumentDTO> getAllUsers() {
+    public ResponseEntity<DocumentDTO> getAllDocuments() {
 
         return Optional
                 .ofNullable(documentCacheService.getDocuments())
@@ -28,7 +28,7 @@ public class DocumentController {
     }
 
     @GetMapping("/{title}")
-    public ResponseEntity<DocumentDTO> getUser(@PathVariable String title) {
+    public ResponseEntity<DocumentDTO> getDocumentsByTitle(@PathVariable String title) {
 
         return Optional
                 .ofNullable(documentCacheService.getDocumentsByTitle(title))
@@ -37,7 +37,8 @@ public class DocumentController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        return documentCacheService.deleteDocument(id);
+    public ResponseEntity<String> deleteDocument(@PathVariable Long id) {
+
+        return ResponseEntity.ok(documentCacheService.deleteDocument(id));
     }
 }

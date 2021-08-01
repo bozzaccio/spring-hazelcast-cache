@@ -29,6 +29,6 @@ public class DocumentCacheService {
     @CacheEvict(value = "document-cache")
     public String deleteDocument(Long id) {
         documentRepository.deleteById(id);
-        return "User deleted with id " + id;
+        return String.format("Document with ID %s has been deleted.",id);
     }
 }

@@ -1,9 +1,10 @@
 package bozzaccio.poc.service;
 
-import bozzaccio.poc.component.CacheComponent;
+import bozzaccio.poc.component.CacheMap;
 import bozzaccio.poc.entity.Attachment;
 import bozzaccio.poc.repository.AttachmentRepository;
 import com.hazelcast.core.Hazelcast;
+import com.ibm.dtfj.image.DataUnavailable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.TimerTask;
  * Cache using hazelcast IMap
  */
 @Service
-public class AttachmentCacheService extends CacheComponent<Long, String> {
+public class AttachmentCacheService extends CacheMap<Long, String> {
 
     private static final Logger _LOGGER = LoggerFactory.getLogger(AttachmentCacheService.class);
 
